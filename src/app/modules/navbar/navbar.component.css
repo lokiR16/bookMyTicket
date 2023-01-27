@@ -1,0 +1,134 @@
+
+  .Navbar
+  {
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+  overflow:hidden;
+  background: #333545;
+        display:inline-block;
+        width: 100%;
+  }
+
+    #secondaryNavbar{
+        list-style-type: none;
+  margin:0;
+  padding: 0;
+  overflow:hidden;
+  background: #1f2533;
+        display:inline-block;
+        width: 100%;
+    }
+
+  li{
+  float: right;
+  }
+
+  li a{
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-align: center;
+    font-size: 14px;
+  font-family: sans-serif;
+  }
+
+  li a:hover{
+  background: #555;
+  color: #FFFFFF;
+    text-decoration: underline;
+  }
+
+  .active {
+  background-color: #4CAF50;
+  color: white;
+  }
+
+    .logo {
+        margin-right: 20px;
+        margin-left: 20px;
+        float: left;
+        padding: 2px;
+    }
+
+    #logo a:hover{
+        background: #f1f1f1;
+        text-decoration: underline;
+        color: black;
+    }
+
+    #logoText{
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .logoColr2{
+        color:white;
+        background-color: red;
+    }
+
+    li input{
+    display: block;
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-align: center;
+    width: 150%;
+    margin-left: 1cm;
+    border: 1px solid #ccc;
+    }
+
+    .active {
+  background-color: #63686E;
+  color: #FFFFFF;
+  }
+
+    .dropdown{
+    display: inline-block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  text-align: center;
+    background: #333545;
+    }
+
+   .secondaryNavbar{
+    margin-right: 20px;
+    margin-left: 70px;
+    float: left;
+    padding: 2px;
+   }
+
+
+   .footer{
+       background-color: #1f2533;
+       color: blanchedalmond;
+       margin-top: 0px;
+   }
+
+   #footerText{
+       font-weight: bolder;
+       margin-right: 10px;
+       margin-left: 10px;
+   }
+
+
+   .footer-message{
+        color: #ffffff;
+        padding-top: 15px;
+        padding-right: 10px;
+        padding-bottom: 15px;
+        padding-left: 10px;
+        text-align: center;
+   }
+
+   #buttonFooter{
+       background-color: #ec5e71;
+       padding: 10px;
+       color: white;
+       font-family: sans-serif;
+       font-size: 15px;
+       margin-left: 100px;
+   }
+

@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+
+<!-- <div>
+    <ul id="secondaryNavbar">
+        <li class="secondaryNavbar"><a id="logoText" href="movies.html">Movies</a></li>
+        <li class="secondaryNavbar"><a id="logoText" href="events.html">Events</a></li>
+        <li class="secondaryNavbar"><a id="logoText" href="food.html">Food & Drink</a></li>
+        <li class="secondaryNavbar"><a id="logoText" href="quote.html">Get-a-Quote</a></li>
+        <li class="secondaryNavbar"><a id="logoText" href="offers.html">Giftcards</a></li>
+    </ul>
+</div> -->
+
+<div class="row margin">
+    <h4 class="MainHead">YOUR FAVOURITE MOVIES</h4>
+    <marquee onMouseover="stop()" onMouseout="start()" Scrollamount=10>
+      <table id="moviesTable">
+        <tr class="moviesTr">
+          <td class="moviesTd" *ngFor="let movie of movieList">
+            <a href="payment.html" class="moviesLinkList">
+              <img class="img-dimension" src={{movie.thumbnail_url}} height=275px width=172px>
+            </a>
+            <span class="moviesTdText">
+              <a href="payment.html" class="moviesLinkList">{{movie.movie_name}}</a>
+            </span>
+            <span class="moviesTags">
+              <a href="payment.html" class="moviesLinkList">{{movie.tags}}</a>
+            </span>
+          </td>
+          <!-- <tr>
+            <td class="moviesTdText" *ngFor="let movie of movieList">
+                <a href="payment.html" class="moviesLinkList">{{movie.}}t</a>
+            </td>
+        </tr> -->
+
+        </tr>
+
+
+
+      </table>
+    </marquee>
+    </div>
+<div class="row">
+<h5 class="MainHead">BOOK IN YOUR FAVOURITE THEATRES</h5>
+<div class="container">
+  <div class="row"  *ngFor="let theatre of theatreList" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="tn-main-content">
+            <div class="tn-main-inner-content">
+              <div id="theatres"class="container tn-entity-list tn-theatres">
+                <div class='tn-block tn-entity' >
+                  <div class='tn-theatre-icon'>
+                    <img src='assets/theatres.svg' />
+                  </div>
+                  <div class='tn-entity-details'>
+                    <h5>{{theatre.theatre_name}}</h5>
+                    <p>{{theatre.address}}</p>
+                    <div class='tn-services'>
+                      <span class='tn-service'>Customer Rating: {{theatre.customer_rating}}</span>
+                    </div>
+                  </div>
+                  <div class='tn-entity-book'  routerLinkActive="active" (click) = "onBook(theatre)">
+                    <a >Book</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+</div>

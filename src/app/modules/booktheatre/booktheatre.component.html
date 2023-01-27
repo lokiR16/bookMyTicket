@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div  id="content">
+  <div class="tn-section tn-full-width">
+    <div id="theatre_container" class="tn-entity-container tn-theatre" style="height:250px;background-image: url('//cdn11.ticketnew.com/images/theatre-movie-list-bg.jpg')">
+      <div class="tn-section-content tn-no-padding" >
+        <div id="divTheatreInfo" class="theatre-details tn-entity-details" style="width:690px;"><h3>{{theatreDetails.theatre_name}}</h3><h6 itemprop='address' itemscope='' itemtype='https://schema.org/PostalAddress'>{{theatreDetails.address}}</h6><div class='tn-services'><span class='tn-service'>RGB Laser</span> <span class='tn-service'>F&B</span> <span class='tn-service'>4K</span> <span class='tn-service'>Dolby Atmos</span> </div></div>
+
+      </div>
+    </div>
+  </div>
+  <div class="row"  >
+      <div class="column" >
+          <img src={{todayShowList[0].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
+        </div>
+        <div class="column" >
+            <img src={{todayShowList[1].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
+          </div>
+          <div class="column" >
+              <img src={{todayShowList[2].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
+            </div>
+            <div class="column" >
+                <img src={{todayShowList[3].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
+              </div>
+      </div>
+
+    
+      <div class="column">
+        <img src="img_nature.jpg" alt="Nature" onclick="myFunction(this);">
+      </div>
+ 
+
+
+      
