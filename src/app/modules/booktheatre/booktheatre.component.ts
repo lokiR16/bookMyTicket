@@ -13,7 +13,9 @@ export class BooktheatreComponent implements OnInit {
   theatres: Array<any>;
   availableMovie: object;
   todayShowList: Array<any>;
-  constructor(private route: ActivatedRoute, private dataService: DataserviceService ) { }
+  showTime: any;
+  displayStyle = 'none';
+  constructor(private route: ActivatedRoute, private dataService: DataserviceService) { }
 
   ngOnInit() {
     this.theatreDetails = this.dataService.selectedTheatre;
@@ -21,14 +23,14 @@ export class BooktheatreComponent implements OnInit {
   }
 
   getData() {
-    this.dataService.getData().subscribe( (res) => {
+    this.dataService.getData().subscribe((res) => {
       console.log(res);
       this.movies = res.movies;
       this.theatres = res.theatre;
       this.getResult();
-      }, (err) => {
-        console.log(err);
-      });
+    }, (err) => {
+      console.log(err);
+    });
   }
   getMoviesHash(movies) {
     return movies.reduce((currMap, currItem) => {
@@ -48,14 +50,32 @@ export class BooktheatreComponent implements OnInit {
     const theatreHash = this.getTheatresHash(this.theatres);
     const movieHash = this.getMoviesHash(this.movies);
     const theatre = theatreHash.get(this.theatreDetails.theatre_name);
-    const movieNames = Object.entries(theatre).filter(([key, _]) => {
+    const movieNames = Object.entries(theatre).sort().filter(([key, _]) => {
       return key.includes('movie');
-    }).map(([ _, movieName ]) => movieName);
+    }).map(([_, movieName]) => movieName);
+    this.showTime = Object.entries(theatre).sort().filter(([key, _]) => {
+      return key.includes('time');
+    }).map(([_, movieName]) => movieName);
+    console.log(theatreHash, movieHash, movieNames, this.showTime);
     const movies = movieNames.map((showKey) => {
-        return movieHash.get(showKey);
-      });
-    this.todayShowList = movies;
+      return movieHash.get(showKey);
+    });
     console.log(movies);
-    }
+    this.todayShowList = movies.sort();
+    console.log(this.todayShowList);
+  }
+
+
+  openPopup(e, time) {
+    e.time = time;
+    const data = { theatreData: this.theatreDetails, movieData: e};
+    this.displayStyle = 'block';
+    // this.dataService.movieDetail = e;
+    this.dataService.movieDetail.next( data);
+  }
+
+  closePopup() {
+    this.displayStyle = 'none';
+  }
 }
 

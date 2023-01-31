@@ -7,7 +7,9 @@ import { AppRoutingModule } from './modules/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BooktheatreComponent } from './modules/booktheatre/booktheatre.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
-
+import { SeatbookingComponent } from './modules/seatbooking/seatbooking.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FooterComponent } from './modules/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,15 @@ import { NavbarComponent } from './modules/navbar/navbar.component';
     HomepageComponent,
     BooktheatreComponent,
     NavbarComponent,
+    SeatbookingComponent,
+    FooterComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

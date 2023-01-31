@@ -1,33 +1,57 @@
 <app-navbar></app-navbar>
-<div  id="content">
+<div id="content">
   <div class="tn-section tn-full-width">
     <div id="theatre_container" class="tn-entity-container tn-theatre" style="height:250px;background-image: url('//cdn11.ticketnew.com/images/theatre-movie-list-bg.jpg')">
-      <div class="tn-section-content tn-no-padding" >
-        <div id="divTheatreInfo" class="theatre-details tn-entity-details" style="width:690px;"><h3>{{theatreDetails.theatre_name}}</h3><h6 itemprop='address' itemscope='' itemtype='https://schema.org/PostalAddress'>{{theatreDetails.address}}</h6><div class='tn-services'><span class='tn-service'>RGB Laser</span> <span class='tn-service'>F&B</span> <span class='tn-service'>4K</span> <span class='tn-service'>Dolby Atmos</span> </div></div>
-
+      <div class="tn-section-content tn-no-padding">
+        <div class="row">
+          <div class="col-md-8">
+            <div id="divTheatreInfo" class="theatre-details tn-entity-details" style="width:690px;">
+              <h4>{{theatreDetails.theatre_name}}</h4>
+              <h6 itemprop='address' itemscope='' itemtype='https://schema.org/PostalAddress'>{{theatreDetails.address}}</h6>
+              <div class='tn-services'>
+                <span class='tn-service'>RGB Laser</span>
+                <span class='tn-service'>F&B</span>
+                <span class='tn-service'>4K</span>
+                <span class='tn-service'>Dolby Atmos</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row"  >
-      <div class="column" >
-          <img src={{todayShowList[0].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
-        </div>
-        <div class="column" >
-            <img src={{todayShowList[1].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
+  <h4 class="MainHead">CLICK TO BOOK YOUR MOVIE</h4>
+  <div class="section">
+    <div class="row movie-sec">
+      <!-- <div class="col-md-12" > -->
+      <div class="sinopsis">
+        <div class="card card-mt" *ngFor="let show of todayShowList; let i = index " (click)="openPopup(show,showTime[i])">
+          <div class="cover-movie">
+            <img class="cover" src={{show.thumbnail_url}} height=275px width=230px>
+            <h5>{{show.movie_name}}</h5>
+            <span style="color: #241212">
+              <b>Tue, 31 Jan {{showTime[i]}}</b>
+            </span>
+            <small>({{show.running_time}})</small>
           </div>
-          <div class="column" >
-              <img src={{todayShowList[2].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
-            </div>
-            <div class="column" >
-                <img src={{todayShowList[3].thumbnail_url}} alt="Nature" onclick="myFunction(this);">
-              </div>
+        </div>
       </div>
+    </div>
+  </div>
 
-    
-      <div class="column">
-        <img src="img_nature.jpg" alt="Nature" onclick="myFunction(this);">
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select Your Seats</h5>
+          <button mat-button (click)="closePopup()">X</button>
+        </div>
+        <div class="modal-body">
+          <app-seatbooking></app-seatbooking>
+
+        </div>
       </div>
- 
-
-
-      
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
