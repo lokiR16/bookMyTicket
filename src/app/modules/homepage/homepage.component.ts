@@ -18,16 +18,13 @@ export class HomepageComponent implements OnInit {
 
   getData() {
     this.dataService.getData().subscribe( (res) => {
-    console.log(res);
     this.movieList = res.movies;
     this.theatreList = res.theatre;
     }, (err) => {
-      console.log(err);
     });
   }
 
   onBook(e) {
-  console.log(e);
   this.dataService.selectedTheatre = e;
   this.router.navigate(['/theatre']);
   }

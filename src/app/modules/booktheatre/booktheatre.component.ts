@@ -32,12 +32,10 @@ export class BooktheatreComponent implements OnInit {
 
   getData() {
     this.dataService.getData().subscribe((res) => {
-      console.log(res);
       this.movies = res.movies;
       this.theatres = res.theatre;
       this.getResult();
     }, (err) => {
-      console.log(err);
     });
   }
   getMoviesHash(movies) {
@@ -64,13 +62,10 @@ export class BooktheatreComponent implements OnInit {
     this.showTime = Object.entries(theatre).sort().filter(([key, _]) => {
       return key.includes('time');
     }).map(([_, movieName]) => movieName);
-    console.log(theatreHash, movieHash, movieNames, this.showTime);
     const movies = movieNames.map((showKey) => {
       return movieHash.get(showKey);
     });
-    console.log(movies);
     this.todayShowList = movies.sort();
-    console.log(this.todayShowList);
   }
 
 
@@ -108,7 +103,6 @@ this.dateArr.push({label: this.todayDate, value: dateToday});
 this.dateArr.push({label: dateTomorrow, value: dateTomorrow});
 this.dateArr.push({label: dateAfterTomorrow, value: dateAfterTomorrow});
 this.dateArr.push({label: dateAfterTomorrowone, value: dateAfterTomorrowone});
-
   }
 }
 

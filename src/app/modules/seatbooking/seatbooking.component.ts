@@ -24,7 +24,6 @@ export class SeatbookingComponent implements OnInit {
     // tslint:disable-next-line:no-unused-expression
     this.dataService.movieDetail$.subscribe(data => {
       this.showData = data;
-      console.log(this.showData);
       if (this.showData != null) {
         this.selected = [];
         this.bookedSeat = [];
@@ -33,8 +32,6 @@ export class SeatbookingComponent implements OnInit {
             this.showData.theatreData.booked_seats.forEach(item => {
               if (item[key] === this.showData.movieData.time && item.date === this.showData.movieData.date) {
                 this.bookedSeat = this.validator(item[key.split('_')[0] + '_booked_seats']);
-                // }
-                console.log(this.bookedSeat);
               }
             });
           }
@@ -72,9 +69,7 @@ export class SeatbookingComponent implements OnInit {
 
   bookTicket() {
     const selectedSeat = JSON.stringify(this.selected);
-    console.log(selectedSeat);
     const dateTo = formatDate(this.todayDate, 'dd/MM/yyyy', 'en-US');
-    console.log(this.todayDate, dateTo);
     const data = {
       show_time: this.showData.movieData.time,
       movie_name: this.showData.movieData.movie_name,
@@ -85,11 +80,11 @@ export class SeatbookingComponent implements OnInit {
     };
     console.log(data);
     this.dataService.bookTicket(data).subscribe(res => {
-      console.log(res);
       this.route.navigate(['/']);
+      alert(res.message);
     },
       err => {
-        console.log(err);
+        alert (err);
       }
     );
   }
