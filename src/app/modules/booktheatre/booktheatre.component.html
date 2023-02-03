@@ -21,24 +21,33 @@
     </div>
   </div>
   <h4 class="MainHead">CLICK TO BOOK YOUR MOVIE</h4>
-  <div class="section">
-    <div class="row movie-sec">
-      <!-- <div class="col-md-12" > -->
-      <div class="sinopsis">
-        <div class="card card-mt" *ngFor="let show of todayShowList; let i = index " (click)="openPopup(show,showTime[i])">
-          <div class="cover-movie">
-            <img class="cover" src={{show.thumbnail_url}} height=275px width=230px>
-            <h5>{{show.movie_name}}</h5>
-            <span style="color: #241212">
-              <b>Tue, 31 Jan {{showTime[i]}}</b>
-            </span>
-            <small>({{show.running_time}})</small>
+  <!-- Tab links -->
+  <!-- <div class="row tab-row"> -->
+  <div class="row">
+
+    <div class="tab">
+      <button *ngFor="let item of dateArr; let i = index" [class.active]="selectedIndex === i" class="tablinks" (click)="openTab(item.value, i)">{{item.label | date:'mediumDate'}}</button>
+    </div>
+
+
+    <div class="section">
+      <div class="row movie-sec">
+        <!-- <div class="col-md-12" > -->
+        <div class="sinopsis">
+          <div class="card card-mt" *ngFor="let show of todayShowList; let i = index " (click)="openPopup(show,showTime[i])">
+            <div class="cover-movie">
+              <img class="cover" src={{show.thumbnail_url}} height=275px width=230px>
+              <h5>{{show.movie_name}}</h5>
+              <span style="color: #241212">
+                <b>{{showDate | date:'mediumDate'}} {{showTime[i]}}</b>
+              </span>
+              <small>({{show.running_time}})</small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DataserviceService } from '../../services/dataservice.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-booktheatre',
@@ -14,11 +15,18 @@ export class BooktheatreComponent implements OnInit {
   availableMovie: object;
   todayShowList: Array<any>;
   showTime: any;
+  showDate: any = new Date();
   displayStyle = 'none';
+  todayDate: Date = new Date();
+  dateArr: Array<any> = [];
+  selectedIndex: number;
+
   constructor(private route: ActivatedRoute, private dataService: DataserviceService) { }
 
   ngOnInit() {
+    this.selectedIndex = 0;
     this.theatreDetails = this.dataService.selectedTheatre;
+    this.getDate();
     this.getData();
   }
 
@@ -68,6 +76,7 @@ export class BooktheatreComponent implements OnInit {
 
   openPopup(e, time) {
     e.time = time;
+    e.date = formatDate(this.showDate, 'dd/MM/yyyy', 'en-US');
     const data = { theatreData: this.theatreDetails, movieData: e};
     this.displayStyle = 'block';
     // this.dataService.movieDetail = e;
@@ -76,6 +85,30 @@ export class BooktheatreComponent implements OnInit {
 
   closePopup() {
     this.displayStyle = 'none';
+  }
+
+  openTab(e, index) {
+    this.selectedIndex = index;
+    console.log(e);
+    this.showDate = e;
+  }
+
+  getDate() {
+
+// const dateToday = formatDate(this.todayDate, 'dd/MM/yyyy', 'en-US');
+const dateToday = new Date();
+dateToday.setDate(this.todayDate.getDate());
+const dateTomorrow = new Date();
+dateTomorrow.setDate(this.todayDate.getDate() + 1);
+const dateAfterTomorrow = new Date();
+dateAfterTomorrow.setDate(this.todayDate.getDate() + 2);
+const dateAfterTomorrowone = new Date();
+dateAfterTomorrowone.setDate(this.todayDate.getDate() + 3);
+this.dateArr.push({label: this.todayDate, value: dateToday});
+this.dateArr.push({label: dateTomorrow, value: dateTomorrow});
+this.dateArr.push({label: dateAfterTomorrow, value: dateAfterTomorrow});
+this.dateArr.push({label: dateAfterTomorrowone, value: dateAfterTomorrowone});
+
   }
 }
 

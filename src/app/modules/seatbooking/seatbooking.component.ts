@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { DataserviceService } from '../../services/dataservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seatbooking',
@@ -11,19 +13,46 @@ export class SeatbookingComponent implements OnInit {
   rows: Array<number> = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90];
   // tslint:disable-next-line:no-inferrable-types
   seats: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  bookedSeat = [2, 4, 6, 8, 99];
+  bookedSeat = [];
   selected = [];
   showData: any;
-  constructor(private dataService: DataserviceService) { }
+  todayDate: Date = new Date();
+  constructor(private dataService: DataserviceService, private route: Router) { }
 
 
   ngOnInit() {
     // tslint:disable-next-line:no-unused-expression
     this.dataService.movieDetail$.subscribe(data => {
       this.showData = data;
+      console.log(this.showData);
+      if (this.showData != null) {
+        this.selected = [];
+        this.bookedSeat = [];
+        Object.keys(this.showData.theatreData).forEach(key => {
+          if (this.showData.theatreData[key] === this.showData.movieData.time) {
+            this.showData.theatreData.booked_seats.forEach(item => {
+              if (item[key] === this.showData.movieData.time && item.date === this.showData.movieData.date) {
+                this.bookedSeat = this.validator(item[key.split('_')[0] + '_booked_seats']);
+                // }
+                console.log(this.bookedSeat);
+              }
+            });
+          }
+        });
+      }
     });
   }
 
+  validator(arr) {
+    const c = [];
+    arr.split(',').forEach(i => {
+      const st = parseInt(i.replace('[', '').replace(']', ''), 10);
+      if (!isNaN(st)) {
+        c.push(st);
+      }
+    });
+    return c;
+  }
   updateSelection(seatNumber: number) {
     const ind = this.selected.indexOf(seatNumber);
     if (ind >= 0) {
@@ -35,24 +64,29 @@ export class SeatbookingComponent implements OnInit {
 
 
   isBookedSeat(seatNumber) {
-    return this.bookedSeat.includes(seatNumber);
+    return this.bookedSeat.indexOf(seatNumber) > -1;
   }
   isSelectedSeat(seatNumber) {
     return this.selected.includes(seatNumber);
   }
 
   bookTicket() {
+    const selectedSeat = JSON.stringify(this.selected);
+    console.log(selectedSeat);
+    const dateTo = formatDate(this.todayDate, 'dd/MM/yyyy', 'en-US');
+    console.log(this.todayDate, dateTo);
     const data = {
       show_time: this.showData.movieData.time,
       movie_name: this.showData.movieData.movie_name,
       theatre_name: this.showData.theatreData.theatre_name,
-      booked_seats: this.selected,
-      date: '31/01/2023',
+      booked_seats: selectedSeat,
+      date: this.showData.movieData.date,
       user_mail_id: 'logeshrangababu@gmail.com'
     };
     console.log(data);
     this.dataService.bookTicket(data).subscribe(res => {
       console.log(res);
+      this.route.navigate(['/']);
     },
       err => {
         console.log(err);

@@ -1,5 +1,5 @@
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -17,7 +17,18 @@ export class DataserviceService {
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
-    return this.http.post(endpoint + 'action=getAllDetails', email);
+    // tslint:disable-next-line:prefer-const
+    let body = new HttpParams({
+      fromObject: {
+        user_mail_id: email,
+      }
+    });
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
+    return this.http.post(endpoint + 'action=getAllDetails', body, httpOptions);
   }
 
   bookTicket(data): Observable<any> {
