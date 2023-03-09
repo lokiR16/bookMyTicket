@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DataserviceService } from '../../services/dataservice.service';
 import { formatDate } from '@angular/common';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+
 
 @Component({
   selector: 'app-booktheatre',
@@ -9,6 +11,7 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./booktheatre.component.css']
 })
 export class BooktheatreComponent implements OnInit {
+  currentTheatreDetails: any;
   theatreDetails: any;
   movies: Array<any>;
   theatres: Array<any>;
@@ -19,13 +22,16 @@ export class BooktheatreComponent implements OnInit {
   displayStyle = 'none';
   todayDate: Date = new Date();
   dateArr: Array<any> = [];
-  selectedIndex: number;
+  selectedIndex = 0;
 
-  constructor(private route: ActivatedRoute, private dataService: DataserviceService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private location: Location, private router: Router, private route: ActivatedRoute, private dataService: DataserviceService) { }
 
   ngOnInit() {
-    this.selectedIndex = 0;
-    this.theatreDetails = this.dataService.selectedTheatre;
+    this.route.queryParamMap.subscribe((params) => {
+      this.theatreDetails = params.params;
+      this.selectedIndex = Number(params.params.dateId) || 0;
+  });
     this.getDate();
     this.getData();
   }
@@ -56,6 +62,7 @@ export class BooktheatreComponent implements OnInit {
     const theatreHash = this.getTheatresHash(this.theatres);
     const movieHash = this.getMoviesHash(this.movies);
     const theatre = theatreHash.get(this.theatreDetails.theatre_name);
+    this.currentTheatreDetails = theatre;
     const movieNames = Object.entries(theatre).sort().filter(([key, _]) => {
       return key.includes('movie');
     }).map(([_, movieName]) => movieName);
@@ -72,10 +79,11 @@ export class BooktheatreComponent implements OnInit {
   openPopup(e, time) {
     e.time = time;
     e.date = formatDate(this.showDate, 'dd/MM/yyyy', 'en-US');
-    const data = { theatreData: this.theatreDetails, movieData: e};
+    const data = { theatreData: this.currentTheatreDetails, movieData: e};
     this.displayStyle = 'block';
     // this.dataService.movieDetail = e;
     this.dataService.movieDetail.next( data);
+    this.router.navigate(['/seating']);
   }
 
   closePopup() {
@@ -86,6 +94,11 @@ export class BooktheatreComponent implements OnInit {
     this.selectedIndex = index;
     console.log(e);
     this.showDate = e;
+    // tslint:disable-next-line:no-string-literal
+    const clone = { ...this.theatreDetails };
+    clone.dateId = index;
+    const url = this.router.createUrlTree([], {relativeTo: this.route, queryParams: clone}).toString();
+    this.router.navigateByUrl(url);
   }
 
   getDate() {
@@ -105,4 +118,3 @@ this.dateArr.push({label: dateAfterTomorrow, value: dateAfterTomorrow});
 this.dateArr.push({label: dateAfterTomorrowone, value: dateAfterTomorrowone});
   }
 }
-

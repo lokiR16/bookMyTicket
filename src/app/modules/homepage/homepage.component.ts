@@ -26,6 +26,6 @@ export class HomepageComponent implements OnInit {
 
   onBook(e) {
   this.dataService.selectedTheatre = e;
-  this.router.navigate(['/theatre']);
+  this.router.navigate(['theatre'], { queryParams: e});
   }
 }
